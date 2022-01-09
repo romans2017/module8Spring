@@ -1,24 +1,25 @@
 package ua.goit.module8Spring.wms.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "producers")
-public class Producer implements Model {
+@Table(name = "roles")
+public class Role implements Model {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "producer", fetch = FetchType.EAGER)
-    private Set<Product> products;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
-    public Producer() {
+    public Role() {
     }
 
     public UUID getId() {
@@ -37,11 +38,11 @@ public class Producer implements Model {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

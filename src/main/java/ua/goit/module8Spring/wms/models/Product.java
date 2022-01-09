@@ -6,10 +6,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Model {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @Column(name = "name")
@@ -21,6 +21,9 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producer_id")
     private Producer producer;
+
+    public Product() {
+    }
 
     public UUID getId() {
         return id;
