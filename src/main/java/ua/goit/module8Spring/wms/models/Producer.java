@@ -8,8 +8,8 @@ import java.util.UUID;
 @Table(name = "producers")
 public class Producer implements Model {
     @Id
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
+    @GeneratedValue(generator = "uuid")
     private UUID id;
 
     @Column(name = "name")

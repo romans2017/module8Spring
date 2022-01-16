@@ -1,5 +1,8 @@
 package ua.goit.module8Spring.wms.models;
 
+import ua.goit.module8Spring.wms.repositories.UserRepository;
+import ua.goit.module8Spring.wms.validation.UniqueValidation;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +12,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements Model {
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
+    @GeneratedValue(generator = "uuid")
     private UUID id;
 
     @Column(name = "email", nullable = false)

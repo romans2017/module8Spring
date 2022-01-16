@@ -1,8 +1,10 @@
-package ua.goit.module8Spring.wms.services.modelServices;
+package ua.goit.module8Spring.wms.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import ua.goit.module8Spring.wms.dto.Dto;
 import ua.goit.module8Spring.wms.models.Model;
 
@@ -17,6 +19,8 @@ abstract public class AbstractModelService<M extends Model, D extends Dto> {
 
     private final Class<M> modelClass;
     private final Class<D> dtoClass;
+
+    @Autowired
     protected JpaRepository<M, UUID> repository;
 
     @Autowired
@@ -45,11 +49,13 @@ abstract public class AbstractModelService<M extends Model, D extends Dto> {
         return repository.findById(id).map(entity -> modelMapper.map(entity, dtoClass)).orElse(dto);
     }
 
-    public void create(D dto) {
+    @Transactional
+    public D create(D dto) {
         M model = modelMapper.map(dto, modelClass);
-        repository.save(model);
+        return modelMapper.map(repository.save(model), dtoClass);
     }
 
+    @Transactional
     public void update(UUID id, D dto) {
         repository.findById(id)
                 .map(user -> {
@@ -60,7 +66,12 @@ abstract public class AbstractModelService<M extends Model, D extends Dto> {
                 });
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.deleteById(id);
+    }
+
+    public boolean isExist(String name) {
+        return false;
     }
 }

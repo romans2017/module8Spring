@@ -8,4 +8,7 @@ import java.util.UUID;
 
 @Repository
 public interface ProducerRepository extends JpaRepository<Producer, UUID> {
+
+    boolean existsByNameIgnoreCase(String name);
+
 }
