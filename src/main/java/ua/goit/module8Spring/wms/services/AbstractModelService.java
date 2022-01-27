@@ -4,9 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import ua.goit.module8Spring.wms.dto.Dto;
-import ua.goit.module8Spring.wms.models.Model;
+import ua.goit.module8Spring.wms.models.Dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-abstract public class AbstractModelService<M extends Model, D extends Dto> {
+abstract public class AbstractModelService<M extends Dao, D extends Dto> {
 
     private final Class<M> modelClass;
     private final Class<D> dtoClass;
@@ -71,7 +70,7 @@ abstract public class AbstractModelService<M extends Model, D extends Dto> {
         repository.deleteById(id);
     }
 
-    public boolean isExist(String name) {
+    public boolean isExist(Dto dto) {
         return false;
     }
 }

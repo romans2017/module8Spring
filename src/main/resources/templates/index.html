@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="headers :: common_header( ~{::title})">
+    <title>Main page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div th:insert="navigation :: navigation_bar"> </div>
+    </div>
+</body>
+</html>

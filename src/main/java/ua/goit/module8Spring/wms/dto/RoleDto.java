@@ -2,31 +2,22 @@ package ua.goit.module8Spring.wms.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import ua.goit.module8Spring.wms.services.RoleService;
-import ua.goit.module8Spring.wms.validation.OnCreate;
-import ua.goit.module8Spring.wms.validation.OnUpdate;
 import ua.goit.module8Spring.wms.validation.UniqueValidation;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor(force = true)
-public class RoleDto implements Dto, GrantedAuthority {
+@UniqueValidation(classService = RoleService.class)
+public class RoleDto implements Dto {
 
-    @Null(groups = OnCreate.class)
-    @NotNull(groups = OnUpdate.class)
     private UUID id;
 
     @NotBlank
     @Size(min=2)
-    @UniqueValidation(classService = RoleService.class)
     //@Pattern(regexp = "^ROLE_[a-zA-Z]+")
     private String name;
-
-    @Override
-    public String getAuthority() {
-        return getName();
-    }
 }

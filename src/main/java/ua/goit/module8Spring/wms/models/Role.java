@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Model {
+public class Role implements Dao {
     @Id
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     @GeneratedValue(generator = "uuid")

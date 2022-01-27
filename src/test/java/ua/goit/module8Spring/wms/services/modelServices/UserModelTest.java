@@ -13,7 +13,6 @@ import ua.goit.module8Spring.wms.repositories.UserRepository;
 import ua.goit.module8Spring.wms.services.RoleService;
 import ua.goit.module8Spring.wms.services.UserService;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,7 +73,7 @@ public class UserModelTest {
 
     @Test
     public void getPredefinedUsersRolrs() {
-        List<RoleDto> roleDtoUser = roleService.getByName("role_user");
-        assertThat(roleDtoUser.get(0).getName()).isEqualTo("ROLE_USER");
+        RoleDto roleDtoUser = roleService.getByName("role_user");
+        assertThat(roleDtoUser.getName()).isEqualTo("ROLE_USER");
     }
 }

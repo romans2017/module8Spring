@@ -11,4 +11,5 @@ public interface ProducerRepository extends JpaRepository<Producer, UUID> {
 
     boolean existsByNameIgnoreCase(String name);
 
+    boolean existsByNameIgnoreCaseAndIdIsNot(String name, UUID uuid);
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="headers :: common_header(~{::title})">
+    <title>Registration</title>
+</head>
+<body class="hold-transition register-page">
+<div class="container">
+
+    <div class="row">
+        <h2>REGISTER</h2>
+    </div>
+
+    <div class="row">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+                <form action="#" th:action="@{/registration}" th:object="${userForm}" method="post">
+                    <input type="submit" class="btn btn-primary" value="Register..."/>
+                    <input type="submit" th:formaction = "@{/}" formmethod = "GET" class="btn btn-success" value="Back..."/>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input hidden type="text" class="form-control" th:field="*{id}" th:errorclass="is-invalid">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name" th:errorclass="is-invalid">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:field="*{secondName}" placeholder="Second Name" th:errorclass="is-invalid">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="Email" th:errorclass="is-invalid">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" th:field="*{password}" placeholder="Password" th:errorclass="is-invalid">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Retype password">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

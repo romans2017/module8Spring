@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="headers :: common_header( ~{::title})">
+    <title>Users page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div th:insert="navigation :: navigation_bar"> </div>
+        <div class="row">
+            <h2>USERS</h2>
+        </div>
+
+        <div class="row">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <form action="#" th:action="@{/users/newForm}" method="post">
+                        <input type="submit" class="btn btn-primary" value="New"/>
+                    </form>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Second name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user: ${users}">
+                    <td th:text="${user.email}"/>
+                    <td th:text="${user.firstName}"/>
+                    <td th:text="${user.secondName}"/>
+                    <td>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group me-2" role="group" aria-label="Second group">
+                                <form action="#" th:action="@{/users/editForm}" method="post">
+                                    <input hidden type="text" th:name = "id" th:value="${user.id}"/>
+                                    <input type="submit" class="btn btn-warning" value="Edit"/>
+                                </form>
+                                <form action="#" th:action="@{/users/remove}" method="post">
+                                    <input hidden type="text" th:name = "id" th:value="${user.id}"/>
+                                    <input type="submit" class="btn btn-danger" value="Remove"/>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

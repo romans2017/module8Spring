@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "producers")
-public class Producer implements Model {
+public class Producer implements Dao {
     @Id
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     @GeneratedValue(generator = "uuid")

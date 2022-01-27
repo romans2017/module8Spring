@@ -1,8 +1,5 @@
 package ua.goit.module8Spring.wms.models;
 
-import ua.goit.module8Spring.wms.repositories.UserRepository;
-import ua.goit.module8Spring.wms.validation.UniqueValidation;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User implements Model {
+public class User implements Dao {
     @Id
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     @GeneratedValue(generator = "uuid")
@@ -79,11 +76,11 @@ public class User implements Model {
         this.roles = roles;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
