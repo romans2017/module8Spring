@@ -43,7 +43,7 @@ To deploy application on local computer you need:
 1. Java 17
 2. Postgres 10 or higher
 3. Correct module8Spring/src/main/resources/application.yml:
-* url: jdbc:postgresql://localhost:5432/warehouse - 'localhost:5432' replace with Postgres server, 'warehouse' replace with empty database name
+* url: jdbc:postgresql://localhost:5432/warehouse - 'localhost:5432' replace with Postgres server, 'warehouse' replace with database name (database must be empty!)
 * username: sa - 'sa' replace with user having access to defined database
 * password: 1 - '1' replace with database user password
 4. Credentials for default users (on start):
