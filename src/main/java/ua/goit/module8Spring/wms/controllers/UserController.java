@@ -60,6 +60,7 @@ public class UserController {
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isNew", false);
             model.addAttribute("allRoles", roleService.getAll());
             return "user";
         }
@@ -72,6 +73,7 @@ public class UserController {
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isNew", true);
             model.addAttribute("allRoles", roleService.getAll());
             return "user";
         }
