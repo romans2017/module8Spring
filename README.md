@@ -46,5 +46,8 @@ To deploy application on local computer you need:
 * url: jdbc:postgresql://localhost:5432/warehouse - 'localhost:5432' replace with Postgres server, 'warehouse' replace with empty database name
 * username: sa - 'sa' replace with user having access to defined database
 * password: 1 - '1' replace with database user password
+4. Credentials for default users (on start):
+* Admin - login 'admin@admin.org', password 'P@ssword?654'
+* User - login 'user@user.org', password 'user'
 
 Link to video demostration <https://www.youtube.com/watch?v=4FaNt5RDgg8>
