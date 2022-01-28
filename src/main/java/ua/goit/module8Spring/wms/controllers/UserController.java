@@ -1,6 +1,7 @@
 package ua.goit.module8Spring.wms.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,14 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.goit.module8Spring.wms.dto.RoleDto;
 import ua.goit.module8Spring.wms.dto.UserDto;
 import ua.goit.module8Spring.wms.services.RoleService;
 import ua.goit.module8Spring.wms.services.UserService;
+import ua.goit.module8Spring.wms.validation.OnCreate;
+import ua.goit.module8Spring.wms.validation.OnUpdate;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.UUID;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Validated
 @Controller
 @RequestMapping("/users")
@@ -36,44 +39,43 @@ public class UserController {
 
     @PostMapping("/newForm")
     public String newUser(Model model) {
-        List<RoleDto> roles = roleService.getAll();
-        Map<RoleDto, Boolean> mapRoles = new HashMap<>();
-        roles.forEach(item-> {
-            mapRoles.put(item, item.getName().equals("ROLE_USER"));
-        });
-
-        model.addAttribute("userForm", new UserDto());
-        model.addAttribute("allRoles", roles);
+        UserDto userDto = new UserDto();
+        model.addAttribute("userForm", userDto);
+        model.addAttribute("isNew", true);
+        model.addAttribute("allRoles", roleService.getAll());
         return "user";
     }
 
     @PostMapping("/editForm")
     public String editUser(HttpServletRequest httpServletRequest, Model model) {
         UserDto user = userService.get(UUID.fromString(httpServletRequest.getParameter("id")));
-        List<RoleDto> roles = roleService.getAll();
-        List<RoleDto> userRoles = roleService.getAll();
-
-        Map<RoleDto, Boolean> mapRoles = new HashMap<>();
-        roles.forEach(item-> {
-            mapRoles.put(item, user.getRoles().contains(item));
-        });
-
         model.addAttribute("userForm", user);
-        model.addAttribute("allRoles", roles);
+        model.addAttribute("isNew", false);
+        model.addAttribute("allRoles", roleService.getAll());
         return "user";
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("userForm") @Validated UserDto userForm,
-                             BindingResult bindingResult) {
+    public String updateUser(@ModelAttribute("userForm") @Validated(OnUpdate.class) UserDto userForm,
+                             BindingResult bindingResult,
+                             Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleService.getAll());
             return "user";
         }
-        if (userForm.getId() == null) {
-            userService.create(userForm);
-        } else {
-            userService.update(userForm.getId(), userForm);
+        userService.update(userForm.getId(), userForm);
+        return "redirect:/users";
+    }
+
+    @PostMapping("/create")
+    public String createUser(@ModelAttribute("userForm") @Validated(OnCreate.class) UserDto userForm,
+                             BindingResult bindingResult,
+                             Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleService.getAll());
+            return "user";
         }
+        userService.create(userForm);
         return "redirect:/users";
     }
 

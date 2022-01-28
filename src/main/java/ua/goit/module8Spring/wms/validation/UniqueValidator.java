@@ -21,7 +21,7 @@ public class UniqueValidator implements ConstraintValidator<UniqueValidation, Dt
     }
 
     @Override
-    public boolean isValid(Dto value, ConstraintValidatorContext context) {
+    public boolean isValid(Dto value, ConstraintValidatorContext cont) {
         return !modelService.isExist(value);
     }
 }

@@ -7,11 +7,23 @@ import ua.goit.module8Spring.wms.dto.ProductDto;
 import ua.goit.module8Spring.wms.models.Product;
 import ua.goit.module8Spring.wms.repositories.ProductRepository;
 
+import java.util.UUID;
+
 @Service
 public class ProductService extends AbstractModelService<Product, ProductDto> {
 
     @Autowired
     protected ProductRepository repository;
+
+    @Override
+    public void update(UUID id, ProductDto dto) {
+        repository.findById(id)
+                .map(product -> {
+                    product.setProducer(null);
+                    modelMapper.map(dto, product);
+                    return product;
+                }).ifPresent(product -> repository.save(product));
+    }
 
     @Override
     public boolean isExist(Dto dto) {

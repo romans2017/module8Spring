@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="headers :: common_header( ~{::title})">
+    <title>Producers page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div th:insert="navigation :: navigation_bar"> </div>
+        <div class="row">
+            <h2>PRODUCER</h2>
+        </div>
+
+        <div class="row">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <form action="#" th:action="@{/producers/newForm}" method="post">
+                        <input type="submit" class="btn btn-primary" value="New"/>
+                    </form>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="producer: ${producers}">
+                    <td th:text="${producer.name}"/>
+                    <td>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group me-2" role="group" aria-label="Second group">
+                                <form action="#" th:action="@{/producers/editForm}" method="post">
+                                    <input hidden type="text" th:name = "id" th:value="${producer.id}"/>
+                                    <input type="submit" class="btn btn-warning" value="Edit"/>
+                                </form>
+                                <form action="#" th:action="@{/producers/remove}" method="post">
+                                    <input hidden type="text" th:name = "id" th:value="${producer.id}"/>
+                                    <input type="submit" class="btn btn-danger" value="Remove"/>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

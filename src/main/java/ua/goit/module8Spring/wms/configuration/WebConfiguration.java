@@ -7,6 +7,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import ua.goit.module8Spring.wms.configuration.converters.RoleConverter;
 
 import java.util.Locale;
 
@@ -27,5 +28,6 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/index").setViewName("index");
+        registry.addViewController("/accessDenied").setViewName("accessDenied");
     }
 }

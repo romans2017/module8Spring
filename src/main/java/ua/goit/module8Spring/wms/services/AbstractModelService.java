@@ -60,9 +60,7 @@ abstract public class AbstractModelService<M extends Dao, D extends Dto> {
                 .map(user -> {
                     modelMapper.map(dto, user);
                     return user;
-                }).ifPresent(user -> {
-                    repository.save(user);
-                });
+                }).ifPresent(user -> repository.save(user));
     }
 
     @Transactional

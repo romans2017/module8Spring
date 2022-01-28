@@ -1,6 +1,7 @@
 package ua.goit.module8Spring.wms.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.goit.module8Spring.wms.dto.Dto;
@@ -10,6 +11,7 @@ import ua.goit.module8Spring.wms.repositories.RoleRepository;
 import ua.goit.module8Spring.wms.repositories.UserRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,11 +31,14 @@ public class UserService extends AbstractModelService<User, UserDto> {
     public UserDto create(UserDto dto) {
         User model = modelMapper.map(dto, User.class);
         model.setPassword(passwordEncoder.encode(dto.getPassword()));
-        model.setRoles(Set.of(roleRepository.findByNameAllIgnoreCase("ROLE_USER")));
+        if (dto.getRoles().isEmpty()) {
+            model.setRoles(Set.of(roleRepository.findByNameAllIgnoreCase("ROLE_USER")));
+        }
         return modelMapper.map(repository.save(model), UserDto.class);
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void update(UUID id, UserDto dto) {
         repository.findById(id)
                 .map(user -> {
@@ -41,9 +46,25 @@ public class UserService extends AbstractModelService<User, UserDto> {
                     modelMapper.map(dto, user);
                     user.setPassword(passwordEncoder.encode(dto.getPassword()));
                     return user;
-                }).ifPresent(user -> {
-                    repository.save(user);
-                });
+                }).ifPresent(user -> repository.save(user));
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<UserDto> getAll() {
+        return super.getAll();
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public UserDto get(UUID id) {
+        return super.get(id);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void delete(UUID id) {
+        super.delete(id);
     }
 
     public UserDto getByEmail(String email) {

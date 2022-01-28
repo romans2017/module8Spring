@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="headers :: common_header(~{::title})">
+    <title>PRODUCT</title>
+</head>
+<body>
+<div class="container">
+    <div th:insert="navigation :: navigation_bar"> </div>
+    <div class="row">
+        <h2>PRODUCT</h2>
+    </div>
+
+    <div class="row">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+                <form action="#" th:action="@{/products/update}" th:object="${productForm}" method="post">
+                    <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
+                        <p th:errors="*{global}"></p>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <input type="submit" th:formaction = "@{/products}" formmethod = "GET" class="btn btn-success" value="Back..."/>
+                    <div class="input-group mb-3">
+                        <input hidden type="text" class="form-control" th:field="*{id}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Name" th:errorclass="is-invalid">
+                    </div>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('name')}" th:text="${err}"/>
+                        </ul>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" th:field="*{price}" placeholder="Price" th:errorclass="is-invalid">
+                    </div>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('price')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('price')}" th:text="${err}"/>
+                        </ul>
+                    </div>
+                    <label for="producer_id" class="form-label">Producer</label>
+                    <select id = "producer_id" th:field="*{producer}" th:errorclass="is-invalid">
+                        <option th:each="itemProducer : ${allProducers}"
+                                th:value="${itemProducer.id}"
+                                th:text="${itemProducer.name}"
+                                th:selected="${producer==itemProducer}"></option>
+                    </select>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('producer')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('producer')}" th:text="${err}"/>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

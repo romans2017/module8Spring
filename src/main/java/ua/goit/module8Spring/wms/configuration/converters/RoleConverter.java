@@ -1,4 +1,4 @@
-package ua.goit.module8Spring.wms.configuration;
+package ua.goit.module8Spring.wms.configuration.converters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
