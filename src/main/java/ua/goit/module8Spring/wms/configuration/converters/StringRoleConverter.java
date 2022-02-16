@@ -9,7 +9,7 @@ import ua.goit.module8Spring.wms.services.RoleService;
 import java.util.UUID;
 
 @Component
-public class RoleConverter implements Converter<String, RoleDto> {
+public class StringRoleConverter implements Converter<String, RoleDto> {
 
     @Autowired
     private RoleService roleService;

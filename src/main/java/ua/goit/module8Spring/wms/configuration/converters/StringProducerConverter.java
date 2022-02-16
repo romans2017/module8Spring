@@ -9,7 +9,7 @@ import ua.goit.module8Spring.wms.services.ProducerService;
 import java.util.UUID;
 
 @Component
-public class ProducerConverter implements Converter<String, ProducerDto> {
+public class StringProducerConverter implements Converter<String, ProducerDto> {
 
     @Autowired
     private ProducerService producerService;
