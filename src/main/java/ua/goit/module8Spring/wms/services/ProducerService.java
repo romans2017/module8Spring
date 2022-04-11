@@ -1,6 +1,8 @@
 package ua.goit.module8Spring.wms.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ua.goit.module8Spring.wms.dto.Dto;
 import ua.goit.module8Spring.wms.dto.ProducerDto;
@@ -12,14 +14,12 @@ import ua.goit.module8Spring.wms.repositories.ProductRepository;
 import java.util.List;
 import java.util.UUID;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @Service
 public class ProducerService extends AbstractModelService<Producer, ProducerDto> {
 
-    @Autowired
-    protected ProducerRepository repository;
-
-    @Autowired
-    protected ProductRepository productRepository;
+    ProductRepository productRepository;
 
     @Override
     public void delete(UUID id) {
@@ -34,9 +34,9 @@ public class ProducerService extends AbstractModelService<Producer, ProducerDto>
     @Override
     public boolean isExist(Dto dto) {
         if (dto.getId() == null) {
-            return repository.existsByNameIgnoreCase(((ProducerDto) dto).getName());
+            return ((ProducerRepository) repository).existsByNameIgnoreCase(((ProducerDto) dto).getName());
         } else {
-            return repository.existsByNameIgnoreCaseAndIdIsNot(((ProducerDto) dto).getName(), dto.getId());
+            return ((ProducerRepository) repository).existsByNameIgnoreCaseAndIdIsNot(((ProducerDto) dto).getName(), dto.getId());
         }
     }
 }

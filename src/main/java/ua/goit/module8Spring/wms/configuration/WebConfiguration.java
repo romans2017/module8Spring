@@ -1,6 +1,8 @@
 package ua.goit.module8Spring.wms.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -17,20 +19,15 @@ import ua.goit.module8Spring.wms.dto.RoleDto;
 
 import java.util.Locale;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-    @Autowired
-    private StringRoleConverter stringRoleConverter;
-
-    @Autowired
-    private StringProducerConverter stringProducerConverter;
-
-    @Autowired
-    private RoleStringConverter roleStringConverter;
-
-    @Autowired
-    private ProducerStringConverter producerStringConverter;
+    StringRoleConverter stringRoleConverter;
+    StringProducerConverter stringProducerConverter;
+    RoleStringConverter roleStringConverter;
+    ProducerStringConverter producerStringConverter;
 
     @Bean
     public LocaleResolver localeResolver() {

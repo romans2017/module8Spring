@@ -1,6 +1,8 @@
 package ua.goit.module8Spring.wms.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,16 +18,15 @@ import ua.goit.module8Spring.wms.services.ProductService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @Validated
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private ProducerService producerService;
+    ProductService productService;
+    ProducerService producerService;
 
     @GetMapping
     public String getProducts(Model model) {

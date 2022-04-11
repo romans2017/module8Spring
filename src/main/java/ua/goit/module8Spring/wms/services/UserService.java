@@ -1,6 +1,8 @@
 package ua.goit.module8Spring.wms.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,17 +17,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @Service
 public class UserService extends AbstractModelService<User, UserDto> {
 
-    @Autowired
-    protected UserRepository repository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
+    PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto create(UserDto dto) {
@@ -68,15 +66,15 @@ public class UserService extends AbstractModelService<User, UserDto> {
     }
 
     public UserDto getByEmail(String email) {
-        return modelMapper.map(repository.findByEmailAllIgnoreCase(email), UserDto.class);
+        return modelMapper.map(((UserRepository) repository).findByEmailAllIgnoreCase(email), UserDto.class);
     }
 
     @Override
     public boolean isExist(Dto dto) {
         if (dto.getId() == null) {
-            return repository.existsByEmailIgnoreCase(((UserDto) dto).getEmail());
+            return ((UserRepository) repository).existsByEmailIgnoreCase(((UserDto) dto).getEmail());
         } else {
-            return repository.existsByEmailIgnoreCaseAndIdIsNot(((UserDto) dto).getEmail(), dto.getId());
+            return ((UserRepository) repository).existsByEmailIgnoreCaseAndIdIsNot(((UserDto) dto).getEmail(), dto.getId());
         }
     }
 }

@@ -18,11 +18,7 @@ abstract public class AbstractModelService<M extends Dao, D extends Dto> {
 
     private final Class<M> modelClass;
     private final Class<D> dtoClass;
-
-    @Autowired
     protected JpaRepository<M, UUID> repository;
-
-    @Autowired
     protected ModelMapper modelMapper;
 
     @SuppressWarnings("unchecked")
@@ -30,6 +26,16 @@ abstract public class AbstractModelService<M extends Dao, D extends Dto> {
         Type[] params = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
         modelClass = (Class<M>) params[0];
         dtoClass = (Class<D>) params[1];
+    }
+
+    @Autowired
+    public void setRepository(JpaRepository<M, UUID> repository) {
+        this.repository = repository;
+    }
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 
     public List<D> getAll() {

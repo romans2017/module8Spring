@@ -1,6 +1,8 @@
 package ua.goit.module8Spring.wms.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +21,15 @@ import ua.goit.module8Spring.wms.validation.OnUpdate;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Validated
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private RoleService roleService;
 
     @GetMapping

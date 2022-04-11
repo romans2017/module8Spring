@@ -1,19 +1,25 @@
 package ua.goit.module8Spring.wms.validation;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import org.springframework.context.ApplicationContext;
 import ua.goit.module8Spring.wms.dto.Dto;
+import ua.goit.module8Spring.wms.models.Dao;
 import ua.goit.module8Spring.wms.services.AbstractModelService;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class UniqueValidator implements ConstraintValidator<UniqueValidation, Dto> {
 
-    private AbstractModelService<?, ?> modelService;
+    @NonFinal
+    private AbstractModelService<? extends Dao, ? extends Dto> modelService;
 
-    @Autowired
-    private ApplicationContext context;
+    ApplicationContext context;
 
     @Override
     public void initialize(UniqueValidation constraintAnnotation) {
